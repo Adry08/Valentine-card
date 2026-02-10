@@ -25,18 +25,18 @@ body {
   width: 92vw;
   max-width: 380px;
   min-height: 520px;
-  padding: 2.5rem 1.5rem;
+  padding: 2.2rem 1.4rem;
   border-radius: 1.5rem;
   box-shadow: 0 8px 32px rgba(255,99,155,.25);
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
+  overflow: hidden; /* 🔒 empêche toute sortie */
 }
 
 .circle-photo {
-  width: 120px;
-  height: 120px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
   object-fit: cover;
   border: 4px solid #ff639b;
@@ -46,32 +46,32 @@ body {
 .title {
   font-family: 'Pacifico', cursive;
   color: #ff639b;
-  font-size: 2rem;
+  font-size: 1.9rem;
   text-align: center;
 }
 
 .name {
   font-weight: 600;
   color: #9d235b;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.2rem;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
+  gap: 1rem;
   width: 100%;
-  height: 180px;
+  height: 160px;
   position: relative;
 }
 
 .valentine-btn {
-  font-size: 1.1rem;
-  padding: 0.7em 2em;
-  border-radius: 30px;
+  font-size: 0.95rem;        /* 👈 plus petit */
+  padding: 0.45em 1.3em;     /* 👈 plus petit */
+  border-radius: 22px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(255,99,155,.25);
+  box-shadow: 0 2px 6px rgba(255,99,155,.25);
 }
 
 .valentine-btn.yes {
@@ -93,14 +93,14 @@ body {
 }
 
 .youpi {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #ff4081;
   animation: pop .6s ease-out;
 }
 
 .heart {
-  font-size: 2.5rem;
+  font-size: 2.4rem;
   animation: heartbeat 1s infinite;
 }
 
@@ -146,14 +146,14 @@ const yesBtn = document.getElementById('yesBtn');
 const card = document.getElementById('card');
 const buttons = document.getElementById('buttons');
 
-let isFree = false;
+let released = false;
 
 function releaseNoButton() {
-  if (isFree) return;
-  isFree = true;
+  if (released) return;
+  released = true;
 
   const btnRect = noBtn.getBoundingClientRect();
-  const parentRect = buttons.getBoundingClientRect();
+  const parentRect = card.getBoundingClientRect();
 
   noBtn.style.position = 'absolute';
   noBtn.style.left = (btnRect.left - parentRect.left) + 'px';
@@ -165,7 +165,7 @@ function moveNo() {
 
   const cardRect = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
-  const padding = 20;
+  const padding = 12;
 
   const maxX = cardRect.width - btnRect.width - padding;
   const maxY = cardRect.height - btnRect.height - padding;
