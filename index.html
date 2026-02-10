@@ -25,15 +25,16 @@ body {
   width: 92vw;
   max-width: 380px;
   min-height: 520px;
-  padding: 2.2rem 1.4rem;
+  padding: 2rem 1.4rem 4.5rem; /* place pour le bouton Yes */
   border-radius: 1.5rem;
   box-shadow: 0 8px 32px rgba(255,99,155,.25);
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden; /* 🔒 empêche toute sortie */
+  overflow: hidden; /* 🔒 interdit toute sortie */
 }
 
+/* ---------- CONTENT ---------- */
 .circle-photo {
   width: 110px;
   height: 110px;
@@ -46,7 +47,7 @@ body {
 .title {
   font-family: 'Pacifico', cursive;
   color: #ff639b;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   text-align: center;
 }
 
@@ -56,37 +57,43 @@ body {
   margin-bottom: 1.2rem;
 }
 
+/* ---------- BUTTONS ---------- */
 .buttons {
+  position: absolute;
+  bottom: 1.4rem;
+  width: 100%;
   display: flex;
   justify-content: center;
-  gap: 1rem;
-  width: 100%;
-  height: 160px;
-  position: relative;
 }
 
 .valentine-btn {
-  font-size: 0.95rem;        /* 👈 plus petit */
-  padding: 0.45em 1.3em;     /* 👈 plus petit */
-  border-radius: 22px;
+  width: 110px;          /* 🔒 largeur FIXE */
+  height: 42px;          /* 🔒 hauteur FIXE */
+  border-radius: 999px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(255,99,155,.25);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(255,99,155,.35);
 }
 
 .valentine-btn.yes {
-  background: linear-gradient(90deg,#ff639b,#ffa3be);
+  background: linear-gradient(135deg,#ff639b,#ffa3be);
   color: #fff;
+  z-index: 2;
 }
 
 .valentine-btn.no {
   background: #ffe1ec;
   color: #fc0660;
+  position: absolute;
+  left: 50%;
+  transform: translateX(140px); /* départ à droite du Yes */
+  z-index: 3;
   transition: transform .15s ease;
-  z-index: 5;
 }
 
-/* SUCCESS */
+/* ---------- SUCCESS ---------- */
 .success {
   text-align: center;
   animation: fadeIn 1s;
@@ -118,12 +125,6 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
-@media (max-width: 600px) {
-  .card { min-height: 460px; }
-  .title { font-size: 1.4rem; }
-  .circle-photo { width: 90px; height: 90px; }
-}
 </style>
 </head>
 
@@ -134,7 +135,7 @@ body {
   <h1 class="title">Will you be my Valentine?</h1>
   <div class="name">Rindra Tiavina</div>
 
-  <div class="buttons" id="buttons">
+  <div class="buttons">
     <button class="valentine-btn yes" id="yesBtn">Yes</button>
     <button class="valentine-btn no" id="noBtn">No</button>
   </div>
@@ -142,27 +143,9 @@ body {
 
 <script>
 const noBtn = document.getElementById('noBtn');
-const yesBtn = document.getElementById('yesBtn');
 const card = document.getElementById('card');
-const buttons = document.getElementById('buttons');
-
-let released = false;
-
-function releaseNoButton() {
-  if (released) return;
-  released = true;
-
-  const btnRect = noBtn.getBoundingClientRect();
-  const parentRect = card.getBoundingClientRect();
-
-  noBtn.style.position = 'absolute';
-  noBtn.style.left = (btnRect.left - parentRect.left) + 'px';
-  noBtn.style.top = (btnRect.top - parentRect.top) + 'px';
-}
 
 function moveNo() {
-  releaseNoButton();
-
   const cardRect = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
   const padding = 12;
@@ -183,21 +166,6 @@ noBtn.addEventListener('touchstart', e => {
   moveNo();
 });
 noBtn.addEventListener('click', e => e.preventDefault());
-
-// YES
-yesBtn.addEventListener('click', () => {
-  card.innerHTML = `
-    <div class="success">
-      <div class="youpi">🎉 YOUUUUPI 🎉</div>
-      <div class="heart">💖</div>
-      <h2>Happy Valentine’s Day</h2>
-      <p>
-        Tu as dit oui 😍<br>
-        <strong>Rindra Tiavina</strong>
-      </p>
-    </div>
-  `;
-});
 </script>
 
 </body>
