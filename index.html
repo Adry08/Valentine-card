@@ -20,17 +20,17 @@
             background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
-            touch-action: none; /* Désactive les gestes par défaut sur mobile */
+            touch-action: none;
         }
 
         /* --- CARD --- */
         .card {
             background: white;
             width: 90%;
-            max-width: 420px;
+            max-width: 440px; 
             min-height: 520px;
             border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
+            box-shadow: 0 20px 45px rgba(255, 107, 129, 0.25);
             text-align: center;
             padding: 40px;
             display: flex;
@@ -48,7 +48,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 6px solid var(--pink-light);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -62,7 +62,7 @@
             color: #666;
             font-size: 1.2rem;
             font-weight: 600;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
 
         /* --- BUTTONS --- */
@@ -72,13 +72,13 @@
             align-items: center;
             gap: 20px;
             width: 100%;
-            height: 60px;
+            height: 80px;
             position: relative;
         }
 
         .btn {
-            width: 110px;
-            height: 45px;
+            width: 115px;
+            height: 48px;
             border: none;
             border-radius: 25px;
             font-weight: 600;
@@ -87,24 +87,42 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.2s;
+            animation: btnPulse 2s infinite; /* Animation Pulse */
+            box-sizing: border-box;
         }
 
         .btn-yes {
             background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
+            box-shadow: 0 6px 15px rgba(255, 107, 129, 0.3);
             z-index: 5;
         }
 
         .btn-no {
             background-color: var(--pink-light);
             color: var(--pink-primary);
-            border: 3px solid white; /* Bordure blanche demandée */
+            border: 3px solid white;
             position: relative;
             z-index: 1000;
-            transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes btnPulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.4); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 107, 129, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+        }
+
+        @keyframes heartPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         /* --- SUCCESS VIEW --- */
@@ -115,24 +133,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
         }
 
         .heart {
             font-size: 6rem;
-            animation: pulse 0.8s infinite;
+            animation: heartPulse 0.8s infinite;
             display: block;
             margin-bottom: 20px;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-
-        @keyframes pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -154,7 +161,7 @@
         <div id="successView" class="hidden success-content">
             <span class="heart">💖</span>
             <h1>🎉 YOUHOU ! 🎉</h1>
-            <p>Félicitations ! Tu as fait le bon choix.</p>
+            <p>Félicitations ! Tu as fait le meilleur choix.</p>
         </div>
     </div>
 
@@ -167,49 +174,50 @@
             const isMobile = window.innerWidth <= 768;
             
             if (!moved) {
-                // Au premier mouvement, on passe en fixed ou absolute
+                // Au premier mouvement, on change le mode de position
                 noBtn.style.position = isMobile ? 'absolute' : 'fixed';
+                noBtn.style.animation = 'none'; // On stoppe le pulse pour que le mouvement soit fluide
                 moved = true;
             }
 
             let newX, newY;
 
             if (isMobile) {
-                // --- LOGIQUE MOBILE (Confiné dans la carte) ---
-                const padding = 15;
-                const maxX = card.clientWidth - noBtn.offsetWidth - padding;
-                const maxY = card.clientHeight - noBtn.offsetHeight - padding;
-                
-                newX = Math.random() * (maxX - padding) + padding;
-                newY = Math.random() * (maxY - padding) + padding;
-                
-                noBtn.style.left = newX + 'px';
-                noBtn.style.top = newY + 'px';
+                // LOGIQUE MOBILE : Strictement dans la card
+                const padding = 20;
+                // Calcul des limites par rapport aux dimensions de la card
+                const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
+                const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
+                const minX = padding;
+                const minY = padding;
+
+                newX = Math.random() * (maxX - minX) + minX;
+                newY = Math.random() * (maxY - minY) + minY;
+
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
             } else {
-                // --- LOGIQUE PC (Partout sur l'écran) ---
-                const margin = 50;
+                // LOGIQUE PC : Partout sur l'écran
+                const margin = 100;
                 newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
                 newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
-                
-                noBtn.style.left = newX + 'px';
-                noBtn.style.top = newY + 'px';
+
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
             }
         }
 
-        // Sur PC : s'enfuit au survol
+        // Event Listeners
         noBtn.addEventListener('mouseover', moveButton);
-
-        // Sur Mobile : s'enfuit au toucher sans cliquer
         noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault(); 
-            moveButton(e);
+            e.preventDefault();
+            moveButton();
         });
 
         function showSuccess() {
             document.getElementById('initialView').classList.add('hidden');
             document.getElementById('successView').classList.remove('hidden');
             document.body.style.background = "#ffdfe5";
-            // On cache le bouton "No" s'il se balade sur l'écran
             noBtn.style.display = 'none';
         }
     </script>
