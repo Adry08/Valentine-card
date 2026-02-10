@@ -1,189 +1,202 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Will you be my Valentine?</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will you be my Valentine?</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-primary: #ff6b81;
+            --pink-light: #ffb1bd;
+            --shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ffeef0;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
 
-<style>
-* { box-sizing: border-box; margin:0; padding:0; }
+        /* --- CARD --- */
+        .card {
+            background: white;
+            width: 90%;
+            max-width: 360px;
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-}
+        /* --- IMAGE & TEXT --- */
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--pink-light);
+            margin-bottom: 1rem;
+        }
 
-.card {
-  position: relative;
-  width: 90vw;
-  max-width: 360px;
-  aspect-ratio: 1 / 1;
-  background: #fff;
-  border-radius: 24px;
-  padding: 24px 20px 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
+        h1 {
+            font-family: 'Pacifico', cursive;
+            color: var(--pink-primary);
+            font-size: 1.8rem;
+            margin: 0.5rem 0;
+        }
 
-.photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid #ff5c8a;
-  margin-bottom: 12px;
-}
+        .name {
+            color: #555;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            display: block;
+        }
 
-.title {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.6rem;
-  color: #ff5c8a;
-  text-align: center;
-}
+        /* --- BUTTONS --- */
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 50px;
+            position: relative;
+        }
 
-.name {
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: #7a2b47;
-  margin-bottom: auto;
-}
+        .btn {
+            width: 110px;
+            height: 42px;
+            border: none;
+            border-radius: 21px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+        }
 
-.button-zone {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+        .btn-yes {
+            background: linear-gradient(135deg, var(--pink-primary), var(--pink-light));
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 107, 129, 0.3);
+            z-index: 2;
+        }
 
-.btn {
-  width: 110px;
-  height: 42px;
-  border-radius: 999px;
-  border: none;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
+        .btn-yes:hover {
+            transform: scale(1.05);
+        }
 
-.btn.yes {
-  background: linear-gradient(135deg,#ff5c8a,#ff9eb5);
-  color: #fff;
-  box-shadow: 0 6px 14px rgba(255,92,138,0.45);
-  margin-right: 40px;
-  position: relative;
-  z-index: 2;
-}
+        .btn-no {
+            background-color: var(--pink-light);
+            color: white;
+            position: absolute; /* Crucial pour le mouvement */
+            right: calc(50% - 130px); /* Position initiale à droite */
+            transition: top 0.2s ease, left 0.2s ease;
+            z-index: 1;
+            touch-action: none; /* Empêche le scroll sur mobile en touchant le bouton */
+        }
 
-.btn.no {
-  background: #ffe1ea;
-  color: #e0004d;
-  position: absolute; /* fuite contrôlée */
-  z-index: 10;
-}
-.success {
-  text-align: center;
-  animation: fadeIn 1s;
-}
-.youpi {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #ff4081;
-  margin-bottom: 12px;
-  animation: pop 0.6s ease-out;
-}
-.heart {
-  font-size: 2rem;
-  animation: heartbeat 1s infinite;
-}
-@keyframes pop { from {transform: scale(0); opacity:0;} to {transform: scale(1); opacity:1;} }
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-@keyframes heartbeat {0%,100%{transform:scale(1);}50%{transform:scale(1.3);}}
-</style>
+        /* --- SUCCESS VIEW --- */
+        .hidden {
+            display: none;
+        }
+
+        .success-content {
+            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .heart {
+            font-size: 4rem;
+            display: inline-block;
+            animation: pulse 1s infinite;
+            margin: 1rem 0;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes pop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="card" id="card">
-  <img class="photo" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=400&h=400&facepad=3&q=80">
-  <div class="title">Will you be my Valentine?</div>
-  <div class="name">Rindra Tiavina</div>
+    <div class="card" id="mainCard">
+        <div id="initialView">
+            <img src="https://images.unsplash.com/photo-1518893063132-36e46dbe2428?q=80&w=200&h=200&auto=format&fit=crop" alt="Photo" class="profile-img">
+            
+            <h1>Will you be my Valentine?</h1>
+            <span class="name">Rindra Tiavina</span>
 
-  <div class="button-zone">
-    <button class="btn yes" id="yesBtn">Yes</button>
-    <button class="btn no" id="noBtn">No</button>
-  </div>
-</div>
+            <div class="btn-container" id="container">
+                <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
+                <button class="btn btn-no" id="noBtn">No</button>
+            </div>
+        </div>
 
-<script>
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const card = document.getElementById("card");
-
-// Position initiale du bouton No (après que DOM soit chargé)
-window.addEventListener("load", () => {
-  const cardRect = card.getBoundingClientRect();
-  const btnWidth = noBtn.offsetWidth;
-  const btnHeight = noBtn.offsetHeight;
-
-  // centre horizontal + décalage à droite
-  noBtn.style.left = (cardRect.width/2 + 60 - btnWidth/2) + "px";
-  noBtn.style.top = (cardRect.height - 60) + "px"; // bas du card
-});
-
-// Déplacement limité du No
-function moveNo() {
-  const cardRect = card.getBoundingClientRect();
-  const btnWidth = noBtn.offsetWidth;
-  const btnHeight = noBtn.offsetHeight;
-
-  const padding = 8;
-  const maxX = cardRect.width - btnWidth - padding;
-  const maxY = cardRect.height - btnHeight - padding;
-
-  const currentLeft = parseFloat(noBtn.style.left) || 0;
-  const currentTop = parseFloat(noBtn.style.top) || 0;
-
-  // déplacement limité autour de sa position actuelle
-  let x = currentLeft + (Math.random() * 120 - 60); // ±60px
-  let y = currentTop + (Math.random() * 60 - 30);  // ±30px
-
-  // bornes
-  x = Math.max(padding, Math.min(x, maxX));
-  y = Math.max(padding, Math.min(y, maxY));
-
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
-}
-
-// Fuite du No
-noBtn.addEventListener("pointerenter", moveNo);
-noBtn.addEventListener("touchstart", e => { e.preventDefault(); moveNo(); });
-noBtn.addEventListener("click", e => e.preventDefault());
-
-// Click Yes → message
-yesBtn.addEventListener("click", () => {
-  card.innerHTML = `
-    <div class="success">
-      <div class="youpi">🎉 YOUHOU ! 🎉</div>
-      <div class="heart">💖</div>
-      <h2>Happy Valentine's Day</h2>
-      <p>Tu as dit oui 😍<br><strong>Rindra Tiavina</strong></p>
+        <div id="successView" class="hidden success-content">
+            <div class="heart">💖</div>
+            <h1>🎉 YOUHOU ! 🎉</h1>
+            <p>Félicitations ! C'est le début d'un moment magique.</p>
+        </div>
     </div>
-  `;
-});
-</script>
 
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const card = document.getElementById('mainCard');
+        const container = document.getElementById('container');
+
+        // Fonction pour déplacer le bouton "No"
+        const moveButton = (e) => {
+            // Dimensions de la zone (le conteneur ou la carte)
+            const padding = 20;
+            const maxX = card.clientWidth - noBtn.clientWidth - padding;
+            const maxY = card.clientHeight - noBtn.clientHeight - padding;
+
+            // Générer des positions aléatoires dans les limites de la carte
+            // On calcule par rapport au coin supérieur gauche de la carte
+            const newX = Math.random() * (maxX - padding) + padding;
+            const newY = Math.random() * (maxY - padding) + padding;
+
+            // Appliquer le style. On utilise absolute par rapport à la card
+            noBtn.style.position = 'fixed'; // On bascule en fixed ou absolute selon le besoin
+            
+            // Calculer la position relative à la fenêtre pour éviter qu'il sorte
+            const cardRect = card.getBoundingClientRect();
+            
+            noBtn.style.left = (cardRect.left + newX) + 'px';
+            noBtn.style.top = (cardRect.top + newY) + 'px';
+        };
+
+        // Événements pour le bouton qui fuit
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Empêche le clic sur mobile
+            moveButton();
+        });
+
+        // Fonction de succès
+        function showSuccess() {
+            document.getElementById('initialView').classList.add('hidden');
+            document.getElementById('successView').classList.remove('hidden');
+        }
+    </script>
 </body>
 </html>
