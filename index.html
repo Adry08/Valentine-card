@@ -2,69 +2,72 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Will you be my Valentine?</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink-primary: #ff6b81;
             --pink-light: #ffd1d9;
+            --shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
         }
 
         body {
             margin: 0;
+            padding: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #ffeef0;
+            background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
-            overflow: hidden; /* Empêche le scroll si le bouton bouge */
+            overflow: hidden;
+            touch-action: manipulation;
         }
 
         /* --- CARD --- */
         .card {
             background: white;
             width: 90%;
-            max-width: 450px; 
+            max-width: 420px;
             min-height: 520px;
             border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             position: relative;
             box-sizing: border-box;
-        }
-
-        .content-wrapper {
-            width: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid var(--pink-light);
-            margin-bottom: 20px;
+            border: 5px solid var(--pink-light);
+            margin-top: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-primary);
-            font-size: 2.2rem;
-            margin: 10px 0;
+            font-size: 2.3rem;
+            margin: 15px 0 5px 0;
+            line-height: 1.2;
         }
 
         .name {
-            color: #666;
-            font-size: 1.2rem;
+            color: #777;
+            font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 30px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
         /* --- BUTTONS --- */
@@ -72,81 +75,84 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 25px;
             width: 100%;
-            height: 100px; /* Zone réservée pour les boutons */
-            position: relative;
+            height: 120px;
+            position: relative; /* Référentiel pour le bouton No */
         }
 
         .btn {
             width: 110px;
-            height: 42px;
+            height: 45px;
             border: none;
-            border-radius: 21px;
+            border-radius: 25px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.2s;
+            font-family: 'Poppins', sans-serif;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .btn-yes {
             background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
             color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
+            box-shadow: 0 8px 15px rgba(255, 107, 129, 0.3);
             z-index: 2;
         }
 
         .btn-no {
             background-color: var(--pink-light);
             color: var(--pink-primary);
-            position: relative; /* Commence en relatif pour l'alignement */
-            z-index: 10;
-            transition: top 0.2s ease, left 0.2s ease, transform 0.1s;
+            position: relative; /* Très important pour l'alignement initial */
+            z-index: 100;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        /* --- SUCCESS --- */
+        /* --- SUCCESS VIEW --- */
         .hidden { display: none !important; }
 
         .success-content {
-            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
+            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin: auto;
         }
 
         .heart {
-            font-size: 5rem;
+            font-size: 5.5rem;
             animation: pulse 0.8s infinite;
             display: block;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.15); }
         }
 
         @keyframes pop {
-            0% { transform: scale(0.5); opacity: 0; }
+            0% { transform: scale(0.4); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
+        }
+
+        @media (max-width: 400px) {
+            .card { min-height: 480px; padding: 20px; }
+            h1 { font-size: 1.8rem; }
+            .profile-img { width: 110px; height: 110px; }
         }
     </style>
 </head>
 <body>
 
     <div class="card" id="card">
-        <div id="initialView" class="content-wrapper">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Rindra" class="profile-img">
+        <div id="initialView" style="width: 100%;">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Photo" class="profile-img">
             
             <h1>Will you be my Valentine?</h1>
             <div class="name">Rindra Tiavina</div>
 
-            <div class="btn-container">
+            <div class="btn-container" id="container">
                 <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
                 <button class="btn btn-no" id="noBtn">No</button>
             </div>
@@ -154,64 +160,71 @@
 
         <div id="successView" class="hidden success-content">
             <span class="heart">💖</span>
-            <h1>🎉 YOUHOU ! 🎉</h1>
-            <p>Félicitations ! Tu as fait le bon choix.</p>
+            <h1 style="font-size: 2.5rem;">🎉 YOUHOU ! 🎉</h1>
+            <p style="color: #666; font-size: 1.1rem;">Tu as fait le meilleur choix, <br><strong>Rindra Tiavina</strong> sera ravi(e) ! ✨</p>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const card = document.getElementById('card');
-        let hasMoved = false;
+        const container = document.getElementById('container');
+        let moved = false;
 
-        function moveButton() {
-            if (!hasMoved) {
-                // Au premier mouvement, on fixe sa position actuelle 
-                // pour éviter un saut brutal
-                const rect = noBtn.getBoundingClientRect();
-                const cardRect = card.getBoundingClientRect();
-                
+        function moveButton(event) {
+            // Au premier contact, on passe en absolute
+            if (!moved) {
                 noBtn.style.position = 'absolute';
-                // On recalcule sa position par rapport à la carte
-                noBtn.style.left = (rect.left - cardRect.left) + 'px';
-                noBtn.style.top = (rect.top - cardRect.top) + 'px';
-                hasMoved = true;
-                return; // On attend le prochain survol pour vraiment bouger
+                moved = true;
             }
 
-            const cardWidth = card.clientWidth;
-            const cardHeight = card.clientHeight;
+            // Dimensions utiles
+            const cardWidth = card.offsetWidth;
+            const cardHeight = card.offsetHeight;
             const btnWidth = noBtn.offsetWidth;
             const btnHeight = noBtn.offsetHeight;
 
-            // Calcul des limites (on garde le bouton dans la carte blanche)
-            const margin = 20;
-            const maxX = cardWidth - btnWidth - margin;
-            const maxY = cardHeight - btnHeight - margin;
-            const minX = margin;
-            const minY = margin;
+            // On définit une zone de sécurité (padding interne de la carte)
+            const padding = 25;
 
-            // Nouvelle position aléatoire
-            const newX = Math.random() * (maxX - minX) + minX;
-            const newY = Math.random() * (maxY - minY) + minY;
+            // Calculer une position aléatoire intelligente
+            // Le bouton reste n'importe où dans la carte blanche
+            let newX = Math.random() * (cardWidth - btnWidth - (padding * 2)) + padding;
+            let newY = Math.random() * (cardHeight - btnHeight - (padding * 2)) + padding;
 
-            noBtn.style.left = newX + 'px';
-            noBtn.style.top = newY + 'px';
+            // Sur Desktop, on ajoute un petit effet de "saut" supplémentaire
+            // pour que le bouton ne reste pas trop près du curseur
+            if (event.type === 'mouseover') {
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50; // Distance minimum de saut
+                newX += Math.cos(angle) * distance;
+                newY += Math.sin(angle) * distance;
+
+                // On s'assure que le "saut" ne le sort pas de la carte
+                newX = Math.max(padding, Math.min(newX, cardWidth - btnWidth - padding));
+                newY = Math.max(padding, Math.min(newY, cardHeight - btnHeight - padding));
+            }
+
+            // Appliquer les nouvelles coordonnées relatives à la carte
+            noBtn.style.left = `${newX}px`;
+            noBtn.style.top = `${newY}px`;
+            
+            // Un petit effet de scale aléatoire pour le fun
+            noBtn.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
         }
 
-        // Détection de la souris (PC)
+        // Événements
         noBtn.addEventListener('mouseover', moveButton);
-
-        // Détection du toucher (Mobile)
-        noBtn.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            moveButton();
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Empêche le clic accidentel
+            moveButton(e);
         });
 
         function showSuccess() {
             document.getElementById('initialView').classList.add('hidden');
             document.getElementById('successView').classList.remove('hidden');
-            document.body.style.background = "#ffdfe5";
+            // Background change
+            document.body.style.background = "linear-gradient(135deg, #ffc1cc 0%, #ff8e9e 100%)";
         }
     </script>
 </body>
