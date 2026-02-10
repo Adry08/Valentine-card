@@ -9,12 +9,10 @@
         :root {
             --pink-primary: #ff6b81;
             --pink-light: #ffd1d9;
-            --shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
         }
 
         body {
             margin: 0;
-            padding: 0;
             height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,7 +20,7 @@
             background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
-            touch-action: manipulation;
+            touch-action: none; /* Désactive les gestes par défaut sur mobile */
         }
 
         /* --- CARD --- */
@@ -32,42 +30,39 @@
             max-width: 420px;
             min-height: 520px;
             border-radius: 40px;
-            box-shadow: var(--shadow);
+            box-shadow: 0 15px 35px rgba(255, 107, 129, 0.2);
             text-align: center;
-            padding: 30px;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
             position: relative;
             box-sizing: border-box;
-            border: 2px solid rgba(255, 255, 255, 0.5);
+            z-index: 10;
         }
 
         .profile-img {
-            width: 140px;
-            height: 140px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid var(--pink-light);
-            margin-top: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 6px solid var(--pink-light);
+            margin-bottom: 20px;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-primary);
             font-size: 2.3rem;
-            margin: 15px 0 5px 0;
-            line-height: 1.2;
+            margin: 10px 0;
         }
 
         .name {
-            color: #777;
-            font-size: 1.1rem;
+            color: #666;
+            font-size: 1.2rem;
             font-weight: 600;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         /* --- BUTTONS --- */
@@ -75,10 +70,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
+            gap: 20px;
             width: 100%;
-            height: 120px;
-            position: relative; /* Référentiel pour le bouton No */
+            height: 60px;
+            position: relative;
         }
 
         .btn {
@@ -87,59 +82,57 @@
             border: none;
             border-radius: 25px;
             font-weight: 600;
-            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Poppins', sans-serif;
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.2s;
         }
 
         .btn-yes {
             background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
             color: white;
-            box-shadow: 0 8px 15px rgba(255, 107, 129, 0.3);
-            z-index: 2;
+            box-shadow: 0 4px 15px rgba(255, 107, 129, 0.3);
+            z-index: 5;
         }
 
         .btn-no {
             background-color: var(--pink-light);
             color: var(--pink-primary);
-            position: relative; /* Très important pour l'alignement initial */
-            z-index: 100;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 3px solid white; /* Bordure blanche demandée */
+            position: relative;
+            z-index: 1000;
+            transition: all 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* --- SUCCESS VIEW --- */
         .hidden { display: none !important; }
 
         .success-content {
-            animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin: auto;
+            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .heart {
-            font-size: 5.5rem;
+            font-size: 6rem;
             animation: pulse 0.8s infinite;
             display: block;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.2); }
         }
 
         @keyframes pop {
-            0% { transform: scale(0.4); opacity: 0; }
+            0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
-        }
-
-        @media (max-width: 400px) {
-            .card { min-height: 480px; padding: 20px; }
-            h1 { font-size: 1.8rem; }
-            .profile-img { width: 110px; height: 110px; }
         }
     </style>
 </head>
@@ -147,12 +140,12 @@
 
     <div class="card" id="card">
         <div id="initialView" style="width: 100%;">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Photo" class="profile-img">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Rindra" class="profile-img">
             
             <h1>Will you be my Valentine?</h1>
             <div class="name">Rindra Tiavina</div>
 
-            <div class="btn-container" id="container">
+            <div class="btn-container">
                 <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
                 <button class="btn btn-no" id="noBtn">No</button>
             </div>
@@ -160,71 +153,64 @@
 
         <div id="successView" class="hidden success-content">
             <span class="heart">💖</span>
-            <h1 style="font-size: 2.5rem;">🎉 YOUHOU ! 🎉</h1>
-            <p style="color: #666; font-size: 1.1rem;">Tu as fait le meilleur choix, <br><strong>Rindra Tiavina</strong> sera ravi(e) ! ✨</p>
+            <h1>🎉 YOUHOU ! 🎉</h1>
+            <p>Félicitations ! Tu as fait le bon choix.</p>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const card = document.getElementById('card');
-        const container = document.getElementById('container');
         let moved = false;
 
-        function moveButton(event) {
-            // Au premier contact, on passe en absolute
+        function moveButton(e) {
+            const isMobile = window.innerWidth <= 768;
+            
             if (!moved) {
-                noBtn.style.position = 'absolute';
+                // Au premier mouvement, on passe en fixed ou absolute
+                noBtn.style.position = isMobile ? 'absolute' : 'fixed';
                 moved = true;
             }
 
-            // Dimensions utiles
-            const cardWidth = card.offsetWidth;
-            const cardHeight = card.offsetHeight;
-            const btnWidth = noBtn.offsetWidth;
-            const btnHeight = noBtn.offsetHeight;
+            let newX, newY;
 
-            // On définit une zone de sécurité (padding interne de la carte)
-            const padding = 25;
-
-            // Calculer une position aléatoire intelligente
-            // Le bouton reste n'importe où dans la carte blanche
-            let newX = Math.random() * (cardWidth - btnWidth - (padding * 2)) + padding;
-            let newY = Math.random() * (cardHeight - btnHeight - (padding * 2)) + padding;
-
-            // Sur Desktop, on ajoute un petit effet de "saut" supplémentaire
-            // pour que le bouton ne reste pas trop près du curseur
-            if (event.type === 'mouseover') {
-                const angle = Math.random() * Math.PI * 2;
-                const distance = 50; // Distance minimum de saut
-                newX += Math.cos(angle) * distance;
-                newY += Math.sin(angle) * distance;
-
-                // On s'assure que le "saut" ne le sort pas de la carte
-                newX = Math.max(padding, Math.min(newX, cardWidth - btnWidth - padding));
-                newY = Math.max(padding, Math.min(newY, cardHeight - btnHeight - padding));
+            if (isMobile) {
+                // --- LOGIQUE MOBILE (Confiné dans la carte) ---
+                const padding = 15;
+                const maxX = card.clientWidth - noBtn.offsetWidth - padding;
+                const maxY = card.clientHeight - noBtn.offsetHeight - padding;
+                
+                newX = Math.random() * (maxX - padding) + padding;
+                newY = Math.random() * (maxY - padding) + padding;
+                
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
+            } else {
+                // --- LOGIQUE PC (Partout sur l'écran) ---
+                const margin = 50;
+                newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
+                newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
+                
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
             }
-
-            // Appliquer les nouvelles coordonnées relatives à la carte
-            noBtn.style.left = `${newX}px`;
-            noBtn.style.top = `${newY}px`;
-            
-            // Un petit effet de scale aléatoire pour le fun
-            noBtn.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
         }
 
-        // Événements
+        // Sur PC : s'enfuit au survol
         noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Empêche le clic accidentel
+
+        // Sur Mobile : s'enfuit au toucher sans cliquer
+        noBtn.addEventListener('touchstart', function(e) {
+            e.preventDefault(); 
             moveButton(e);
         });
 
         function showSuccess() {
             document.getElementById('initialView').classList.add('hidden');
             document.getElementById('successView').classList.remove('hidden');
-            // Background change
-            document.body.style.background = "linear-gradient(135deg, #ffc1cc 0%, #ff8e9e 100%)";
+            document.body.style.background = "#ffdfe5";
+            // On cache le bouton "No" s'il se balade sur l'écran
+            noBtn.style.display = 'none';
         }
     </script>
 </body>
