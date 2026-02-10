@@ -17,84 +17,79 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: #ffeef0;
             background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             touch-action: none;
         }
 
-        /* --- CARD --- */
         .card {
             background: white;
             width: 90%;
-            max-width: 440px; 
-            min-height: 520px;
+            max-width: 400px;
+            min-height: 500px;
             border-radius: 40px;
-            box-shadow: 0 20px 45px rgba(255, 107, 129, 0.25);
+            box-shadow: 0 20px 40px rgba(255, 107, 129, 0.2);
             text-align: center;
-            padding: 40px;
+            padding: 30px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             position: relative;
             box-sizing: border-box;
-            z-index: 10;
         }
 
         .profile-img {
-            width: 150px;
-            height: 150px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid var(--pink-light);
-            margin-bottom: 10px;
+            border: 5px solid var(--pink-light);
+            margin-bottom: 15px;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-primary);
-            font-size: 2.3rem;
+            font-size: 2rem;
             margin: 10px 0;
         }
 
         .name {
-            color: #666;
-            font-size: 1.2rem;
+            color: #777;
             font-weight: 600;
             margin-bottom: 30px;
         }
 
-        /* --- BUTTONS --- */
         .btn-container {
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 20px;
             width: 100%;
-            height: 80px;
+            height: 150px; /* Zone d'action du bouton No */
             position: relative;
         }
 
         .btn {
-            width: 115px;
-            height: 48px;
+            width: 110px;
+            height: 45px;
             border: none;
             border-radius: 25px;
             font-weight: 600;
-            font-family: 'Poppins', sans-serif;
             cursor: pointer;
+            font-family: 'Poppins', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: btnPulse 2s infinite; /* Animation Pulse */
-            box-sizing: border-box;
+            animation: pulse 2s infinite;
         }
 
         .btn-yes {
             background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
             color: white;
-            box-shadow: 0 6px 15px rgba(255, 107, 129, 0.3);
             z-index: 5;
         }
 
@@ -102,20 +97,30 @@
             background-color: var(--pink-light);
             color: var(--pink-primary);
             border: 3px solid white;
-            position: relative;
-            z-index: 1000;
+            position: relative; /* Départ normal */
+            z-index: 10;
             transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes btnPulse {
+        @keyframes pulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.4); }
             70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255, 107, 129, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
         }
 
-        @keyframes heartPulse {
+        .hidden { display: none !important; }
+
+        .success-content {
+            animation: pop 0.5s ease-out;
+        }
+
+        .heart-big {
+            font-size: 5rem;
+            animation: heartBeat 0.8s infinite;
+            display: block;
+        }
+
+        @keyframes heartBeat {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.2); }
         }
@@ -124,91 +129,70 @@
             0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
-
-        /* --- SUCCESS VIEW --- */
-        .hidden { display: none !important; }
-
-        .success-content {
-            animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .heart {
-            font-size: 6rem;
-            animation: heartPulse 0.8s infinite;
-            display: block;
-            margin-bottom: 20px;
-        }
     </style>
 </head>
 <body>
 
     <div class="card" id="card">
-        <div id="initialView" style="width: 100%;">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Rindra" class="profile-img">
-            
+        <div id="initialView">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" class="profile-img">
             <h1>Will you be my Valentine?</h1>
             <div class="name">Rindra Tiavina</div>
 
-            <div class="btn-container">
+            <div class="btn-container" id="container">
                 <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
                 <button class="btn btn-no" id="noBtn">No</button>
             </div>
         </div>
 
         <div id="successView" class="hidden success-content">
-            <span class="heart">💖</span>
+            <span class="heart-big">💖</span>
             <h1>🎉 YOUHOU ! 🎉</h1>
-            <p>Félicitations ! Tu as fait le meilleur choix.</p>
+            <p>Tu as fait le bon choix ! ✨</p>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const card = document.getElementById('card');
-        let moved = false;
+        const container = document.getElementById('container');
+        let hasMoved = false;
 
         function moveButton(e) {
             const isMobile = window.innerWidth <= 768;
             
-            if (!moved) {
-                // Au premier mouvement, on change le mode de position
+            if (!hasMoved) {
                 noBtn.style.position = isMobile ? 'absolute' : 'fixed';
-                noBtn.style.animation = 'none'; // On stoppe le pulse pour que le mouvement soit fluide
-                moved = true;
+                noBtn.style.animation = 'none'; // Stop pulse pour fluidité
+                hasMoved = true;
             }
 
-            let newX, newY;
-
             if (isMobile) {
-                // LOGIQUE MOBILE : Strictement dans la card
-                const padding = 20;
-                // Calcul des limites par rapport aux dimensions de la card
-                const maxX = card.offsetWidth - noBtn.offsetWidth - padding;
-                const maxY = card.offsetHeight - noBtn.offsetHeight - padding;
-                const minX = padding;
-                const minY = padding;
+                // LOGIQUE MOBILE : Reste strictement dans le btn-container (le bas de la carte)
+                const areaWidth = container.offsetWidth;
+                const areaHeight = container.offsetHeight;
+                
+                // On calcule des positions relatives au container uniquement
+                const newX = Math.random() * (areaWidth - noBtn.offsetWidth);
+                const newY = Math.random() * (areaHeight - noBtn.offsetHeight);
 
-                newX = Math.random() * (maxX - minX) + minX;
-                newY = Math.random() * (maxY - minY) + minY;
-
-                noBtn.style.left = `${newX}px`;
-                noBtn.style.top = `${newY}px`;
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
             } else {
                 // LOGIQUE PC : Partout sur l'écran
                 const margin = 100;
-                newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
-                newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
+                const newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
+                const newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
 
-                noBtn.style.left = `${newX}px`;
-                noBtn.style.top = `${newY}px`;
+                noBtn.style.left = newX + 'px';
+                noBtn.style.top = newY + 'px';
             }
         }
 
-        // Event Listeners
+        // Mouse pour PC
         noBtn.addEventListener('mouseover', moveButton);
+
+        // Touch pour Mobile (déclenche dès qu'on pose le doigt)
         noBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
             moveButton();
@@ -217,8 +201,8 @@
         function showSuccess() {
             document.getElementById('initialView').classList.add('hidden');
             document.getElementById('successView').classList.remove('hidden');
-            document.body.style.background = "#ffdfe5";
             noBtn.style.display = 'none';
+            document.body.style.background = "#ffdfe5";
         }
     </script>
 </body>
