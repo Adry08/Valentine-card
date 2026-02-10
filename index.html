@@ -9,6 +9,7 @@
         :root {
             --pink-primary: #ff6b81;
             --pink-light: #ffd1d9;
+            --pink-dark: #ff4757;
         }
 
         body {
@@ -17,7 +18,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
+            /* Arrière-plan plus doux et dégradé */
+            background: radial-gradient(circle at center, #fff5f6 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
             touch-action: none;
@@ -27,18 +29,25 @@
         .card {
             background: white;
             width: 90%;
-            max-width: 500px; /* Élargie pour PC */
-            min-height: 550px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(255, 107, 129, 0.3);
+            /* Taille optimisée pour PC (Desktop) */
+            max-width: 480px; 
+            min-height: 580px;
+            border-radius: 50px;
+            box-shadow: 0 30px 60px rgba(255, 107, 129, 0.25);
             text-align: center;
-            padding: 40px;
+            padding: 50px 40px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
             position: relative;
             box-sizing: border-box;
+            transition: all 0.4s ease;
+        }
+
+        /* Effet de survol léger sur la card sur PC */
+        @media (min-width: 1024px) {
+            .card:hover { transform: translateY(-5px); box-shadow: 0 35px 70px rgba(255, 107, 129, 0.3); }
         }
 
         .profile-img {
@@ -46,16 +55,16 @@
             height: 160px;
             border-radius: 50%;
             object-fit: cover;
-            border: 6px solid var(--pink-light);
-            margin-bottom: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 8px solid var(--pink-light);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            margin-bottom: 10px;
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-primary);
-            font-size: 2.5rem;
-            margin: 15px 0;
+            font-size: 2.8rem; /* Plus grand sur PC */
+            margin: 10px 0;
             line-height: 1.2;
         }
 
@@ -63,7 +72,8 @@
             color: #777;
             font-weight: 600;
             font-size: 1.3rem;
-            margin-bottom: 20px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
         }
 
         /* --- BUTTONS CONTAINER --- */
@@ -71,16 +81,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px; /* Plus d'espace entre les boutons */
-            width: 120%; /* Plus large que la card sur PC pour le mouvement */
-            max-width: 600px; 
-            height: 180px; 
+            gap: 40px;
+            width: 100%;
+            height: 100px;
             position: relative;
         }
 
         .btn {
-            width: 120px;
-            height: 50px;
+            width: 130px;
+            height: 55px;
             border: none;
             border-radius: 30px;
             font-weight: 600;
@@ -90,16 +99,19 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            animation: pulse 2s infinite;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-sizing: border-box;
+            animation: btnPulse 2s infinite;
         }
 
         .btn-yes {
-            background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
+            background: linear-gradient(135deg, var(--pink-primary), var(--pink-dark));
             color: white;
             z-index: 10;
-            box-shadow: 0 8px 15px rgba(255, 107, 129, 0.3);
+            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.4);
         }
+
+        .btn-yes:hover { transform: scale(1.1); }
 
         .btn-no {
             background-color: var(--pink-light);
@@ -107,14 +119,19 @@
             border: 3px solid white;
             position: relative;
             z-index: 100;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        @keyframes pulse {
+        /* --- ANIMATIONS --- */
+        @keyframes btnPulse {
             0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0.4); }
-            70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(255, 107, 129, 0); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(255, 107, 129, 0); }
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 107, 129, 0); }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
         /* --- SUCCESS VIEW --- */
@@ -122,38 +139,34 @@
 
         .success-content {
             animation: pop 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            text-align: center;
         }
 
         .ring {
-            font-size: 6rem;
+            font-size: 7rem;
             animation: heartBeat 0.8s infinite;
             display: block;
-            margin-bottom: 15px;
-        }
-
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            margin-bottom: 20px;
         }
 
         @keyframes pop {
-            0% { transform: scale(0.3); opacity: 0; }
+            0% { transform: scale(0.5); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Adaptation mobile pour garder le container dans les clous */
-        @media (max-width: 768px) {
-            .btn-container { width: 100%; height: 140px; }
-            h1 { font-size: 2rem; }
-            .card { padding: 25px; }
+        /* --- RESPONSIVE MOBILE --- */
+        @media (max-width: 600px) {
+            .card { min-height: 500px; padding: 30px 20px; border-radius: 40px; }
+            h1 { font-size: 2.1rem; }
+            .profile-img { width: 130px; height: 130px; }
+            .btn { width: 110px; height: 48px; font-size: 1rem; }
+            .btn-container { gap: 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="card" id="card">
-        <div id="initialView" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+        <div id="initialView" style="width: 100%;">
             <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" class="profile-img">
             <h1>Veux-tu m'épouser ?</h1>
             <div class="name">Rindra Tiavina</div>
@@ -166,8 +179,10 @@
 
         <div id="successView" class="hidden success-content">
             <span class="ring">💍</span>
-            <h1>🎉 OUI POUR LA VIE ! 🎉</h1>
-            <p style="font-size: 1.2rem; color: #444;">Le début de notre plus belle aventure.<br>Je t'aime pour toujours 💖</p>
+            <h1 style="font-size: 2.5rem;">🎉 OUI POUR LA VIE ! 🎉</h1>
+            <p style="font-size: 1.2rem; color: #444; margin-top: 10px;">
+                Je t'aime infiniment 💖
+            </p>
         </div>
     </div>
 
@@ -181,37 +196,42 @@
             const isMobile = window.innerWidth <= 768;
             
             if (!hasMoved) {
-                // On détache le bouton
+                // Déclenchement de la fuite
                 noBtn.style.position = isMobile ? 'absolute' : 'fixed';
-                noBtn.style.animation = 'none'; 
+                noBtn.style.animation = 'none'; // Stoppe le pulse pour fluidité totale
                 hasMoved = true;
             }
 
+            let newX, newY;
+
             if (isMobile) {
-                // LOGIQUE MOBILE : Reste strictement dans la zone basse de la card
-                const padding = 10;
+                // MOBILE : Confiné dans la partie basse de la card
+                const padding = 15;
                 const maxX = card.clientWidth - noBtn.offsetWidth - padding;
                 const maxY = card.clientHeight - noBtn.offsetHeight - padding;
                 const minX = padding;
-                const minY = card.clientHeight / 2; // Reste dans la moitié basse
+                const minY = card.clientHeight / 2; // Zone basse uniquement
 
-                const newX = Math.random() * (maxX - minX) + minX;
-                const newY = Math.random() * (maxY - minY) + minY;
+                newX = Math.random() * (maxX - minX) + minX;
+                newY = Math.random() * (maxY - minY) + minY;
 
                 noBtn.style.left = newX + 'px';
                 noBtn.style.top = newY + 'px';
             } else {
-                // LOGIQUE PC : Voyage partout sur l'écran
-                const margin = 120;
-                const newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
-                const newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
+                // PC : Partout sur l'écran pour un effet plus fun
+                const margin = 100;
+                newX = Math.random() * (window.innerWidth - noBtn.offsetWidth - margin) + margin/2;
+                newY = Math.random() * (window.innerHeight - noBtn.offsetHeight - margin) + margin/2;
 
                 noBtn.style.left = newX + 'px';
                 noBtn.style.top = newY + 'px';
             }
         }
 
+        // Événements PC
         noBtn.addEventListener('mouseover', moveButton);
+
+        // Événements Mobile
         noBtn.addEventListener('touchstart', function(e) {
             e.preventDefault();
             moveButton();
