@@ -1,243 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-  <title>Will you be my Valentine?</title>
-  <!-- Google Fonts: Pacifico (titles), Poppins (text) -->
-  <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
-  <style>
-    /* Background gradient in pink/red */
-    body {
-      min-height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #ffcccc 0%, #ff639b 100%);
-      font-family: 'Poppins', Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Will you be my Valentine?</title>
 
-    .card {
-      background: #fff;
-      border-radius: 1.5rem;
-      box-shadow: 0 8px 32px rgba(255, 99, 155, 0.2), 0 1.5px 8px #ed8fa2;
-      max-width: 380px;
-      width: 92vw;
-      padding: 2.5rem 1.5rem 2rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      min-height: 500px;
-      transition: max-width 0.3s;
-      overflow: hidden;
-    }
+<link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
 
-    .circle-photo {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #ff639b;
-      margin-bottom: 1rem;
-      background: #ffe3ef;
-      box-shadow: 0 4px 16px #ffd6ea55;
-      display: block;
-    }
+<style>
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(135deg, #ffcccc 0%, #ff639b 100%);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    .title {
-      font-family: 'Pacifico', cursive;
-      font-size: 2rem;
-      color: #ff639b;
-      margin: 0.5rem 0 1.1rem;
-      text-align: center;
-    }
+.card {
+  position: relative;
+  background: #fff;
+  width: 92vw;
+  max-width: 380px;
+  min-height: 520px;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(255,99,155,.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
 
-    .name {
-      font-family: 'Poppins', Arial, sans-serif;
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #9d235b;
-      margin-bottom: 1.2rem;
-      letter-spacing: 0.5px;
-      text-align: center;
-    }
+.circle-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #ff639b;
+  margin-bottom: 1rem;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1.4rem;
-      margin-top: 1.7rem;
-      width: 100%;
-      position: relative;
-      min-height: 50px;
-    }
+.title {
+  font-family: 'Pacifico', cursive;
+  color: #ff639b;
+  font-size: 2rem;
+  text-align: center;
+}
 
-    .valentine-btn {
-      font-family: 'Poppins', Arial, sans-serif;
-      font-size: 1.1rem;
-      font-weight: 500;
-      padding: 0.7em 2.1em;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      transition: all 0.2s;
-      outline: none;
-      box-shadow: 0 2px 8px #ffd4e6ab;
-      margin: 0;
-    }
+.name {
+  font-weight: 600;
+  color: #9d235b;
+  margin-bottom: 1.5rem;
+}
 
-    .valentine-btn.yes {
-      background: linear-gradient(90deg,#ff639b,#ffa3be 90%);
-      color: #fff;
-      letter-spacing: 1px;
-      box-shadow: 0 3px 12px #fa2b8772;
-    }
+.buttons {
+  width: 100%;
+  height: 180px;
+  position: relative;
+}
 
-    .valentine-btn.no {
-      background: #ffe1ec;
-      color: #fc0660;
-      position: absolute;
-      top: 0;
-      left: 0;
-      transition: top 0.15s, left 0.15s;
-      min-width: 65px;
-      min-height: 42px;
-      z-index: 2;
-    }
+.valentine-btn {
+  font-size: 1.1rem;
+  padding: 0.7em 2em;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(255,99,155,.25);
+}
 
-    /* Success screen */
-    .success {
-      text-align: center;
-      animation: fadeIn 1s;
-    }
+.valentine-btn.yes {
+  background: linear-gradient(90deg,#ff639b,#ffa3be);
+  color: #fff;
+}
 
-    .success h2 {
-      font-family: 'Pacifico', cursive;
-      color: #e91e63;
-      font-size: 2.2rem;
-      margin-bottom: 0.8em;
-      margin-top: 1.5em;
-      letter-spacing: 1px;
-    }
+.valentine-btn.no {
+  background: #ffe1ec;
+  color: #fc0660;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  transition: transform .15s ease;
+}
 
-    .success p {
-      font-size: 1.2rem;
-      color: #6d1842;
-      margin-bottom: 2em;
-      font-weight: 500;
-    }
+/* SUCCESS */
+.success {
+  text-align: center;
+  animation: fadeIn 1s;
+}
 
-    .success .heart {
-      font-size: 2.8rem;
-      animation: heartbeat 1s infinite;
-      color: #ff639b;
-      margin-bottom: 1.2em;
-      display: block;
-    }
+.youpi {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #ff4081;
+  animation: pop .6s ease-out;
+}
 
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1);}
-      20%, 80% { transform: scale(1.19);}
-      50% { transform: scale(1.35);}
-    }
+.heart {
+  font-size: 2.5rem;
+  animation: heartbeat 1s infinite;
+}
 
-    @keyframes fadeIn {
-      from {opacity:0;}
-      to {opacity:1;}
-    }
+@keyframes pop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
 
-    /* Responsive design */
-    @media (max-width: 600px) {
-      .card { padding: 2rem 0.6rem 1.1rem 0.6rem; min-height: 420px; }
-      .title { font-size: 1.3rem; }
-      .name { font-size: 1rem; }
-      .circle-photo { width: 88px; height: 88px;}
-      .valentine-btn { font-size: 1rem; padding: 0.6em 1.6em;}
-      .success h2 { font-size: 1.25rem;}
-      .success .heart { font-size: 2rem;}
-    }
-  </style>
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .card { min-height: 460px; }
+  .title { font-size: 1.4rem; }
+  .circle-photo { width: 90px; height: 90px; }
+}
+</style>
 </head>
+
 <body>
-  <div class="card" id="valentine-card">
-    <img class="circle-photo" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=400&h=400&facepad=3&q=80" alt="Rindra Tiavina photo placeholder">
-    <h1 class="title">Will you be my Valentine?</h1>
-    <div class="name">Rindra Tiavina</div>
-    <div class="buttons" id="buttons-area">
-      <button class="valentine-btn yes" id="yes-btn" tabindex="1">Yes</button>
-      <button class="valentine-btn no" id="no-btn" tabindex="2">No</button>
-    </div>
+
+<div class="card" id="card">
+  <img class="circle-photo" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=facearea&w=400&h=400&facepad=3&q=80">
+  <h1 class="title">Will you be my Valentine?</h1>
+  <div class="name">Rindra Tiavina</div>
+
+  <div class="buttons">
+    <button class="valentine-btn yes" id="yesBtn">Yes</button>
+    <button class="valentine-btn no" id="noBtn">No</button>
   </div>
-  <script>
-    // DOM elements
-    const noBtn = document.getElementById('no-btn');
-    const yesBtn = document.getElementById('yes-btn');
-    const buttonsArea = document.getElementById('buttons-area');
-    const card = document.getElementById('valentine-card');
+</div>
 
-    // Make No button move on hover
-    noBtn.addEventListener('mouseenter', function() {
-      // Card area limits
-      const cardRect = card.getBoundingClientRect();
-      const btnRect = noBtn.getBoundingClientRect();
-      const area = buttonsArea.getBoundingClientRect();
+<script>
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const card = document.getElementById('card');
 
-      // Find maximal move area inside buttons div
-      const areaWidth = buttonsArea.offsetWidth;
-      const areaHeight = buttonsArea.offsetHeight;
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
+function moveNo() {
+  const cardRect = card.getBoundingClientRect();
+  const btnRect = noBtn.getBoundingClientRect();
+  const padding = 20;
 
-      // Padding to prevent button getting cut off
-      const pad = 8;
-      const maxX = areaWidth - btnWidth - pad;
-      const maxY = areaHeight - btnHeight - pad;
+  const maxX = cardRect.width - btnRect.width - padding;
+  const maxY = cardRect.height - btnRect.height - padding;
 
-      // Random new position
-      const randX = Math.random() * maxX;
-      const randY = Math.random() * maxY;
+  const x = Math.random() * maxX;
+  const y = Math.random() * maxY;
 
-      noBtn.style.left = randX + 'px';
-      noBtn.style.top = randY + 'px';
-    });
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
 
-    // Prevent clicking No
-    noBtn.addEventListener('click', function(e) {
-      e.preventDefault();
-    });
+// Desktop + mobile
+noBtn.addEventListener('pointerenter', moveNo);
+noBtn.addEventListener('touchstart', e => {
+  e.preventDefault();
+  moveNo();
+});
+noBtn.addEventListener('click', e => e.preventDefault());
 
-    // Yes button shows cute success screen
-    yesBtn.addEventListener('click', function() {
-      card.innerHTML = `
-        <div class="success">
-          <span class="heart">💖</span>
-          <h2>Yay! Happy Valentine's Day!</h2>
-          <p>I’m so happy to have you as my Valentine, Rindra Tiavina!<br>Let’s make this day unforgettable! 💝</p>
-        </div>
-      `;
-    });
+// YES
+yesBtn.addEventListener('click', () => {
+  card.innerHTML = `
+    <div class="success">
+      <div class="youpi">🎉 YOUUUUPI 🎉</div>
+      <div class="heart">💖</div>
+      <h2>Happy Valentine’s Day</h2>
+      <p>
+        Tu as dit oui 😍<br>
+        <strong>Rindra Tiavina</strong>
+      </p>
+    </div>
+  `;
+});
+</script>
 
-    // For accessibility: Move No button on focus (keyboard users)
-    noBtn.addEventListener('focus', function() {
-      const areaWidth = buttonsArea.offsetWidth;
-      const areaHeight = buttonsArea.offsetHeight;
-      const btnWidth = noBtn.offsetWidth;
-      const btnHeight = noBtn.offsetHeight;
-
-      const pad = 8;
-      const maxX = areaWidth - btnWidth - pad;
-      const maxY = areaHeight - btnHeight - pad;
-
-      const randX = Math.random() * maxX;
-      const randY = Math.random() * maxY;
-
-      noBtn.style.left = randX + 'px';
-      noBtn.style.top = randY + 'px';
-    });
-  </script>
 </body>
 </html>
