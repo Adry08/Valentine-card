@@ -8,125 +8,115 @@
     <style>
         :root {
             --pink-primary: #ff6b81;
-            --pink-light: #ffb1bd;
-            --bg-gradient: linear-gradient(-45deg, #ffeef0, #fff5f6, #ffd1d9, #ffeef0);
+            --pink-hover: #ff4757;
+            --pink-light: #ffd1d9;
+            --text-color: #444;
         }
 
-        /* Arrière-plan animé pour remplir l'espace PC */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: var(--bg-gradient);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            background: radial-gradient(circle, #ffeef0 0%, #ffc1cc 100%);
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
         }
 
         /* --- CARD --- */
         .card {
             background: white;
             width: 90%;
-            /* Plus large sur PC, max 400px pour garder le côté élégant */
-            max-width: 400px; 
-            min-height: 450px;
-            padding: 2.5rem 2rem;
-            border-radius: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+            /* Taille plus grande sur PC */
+            max-width: 450px; 
+            min-height: 500px;
+            padding: 3rem 2rem;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
             text-align: center;
-            position: relative;
+            position: relative; /* Référentiel pour le bouton No */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10;
+            transition: all 0.3s ease;
         }
 
         /* --- IMAGE & TEXT --- */
         .profile-img {
-            width: 130px;
-            height: 130px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             object-fit: cover;
-            border: 5px solid #fff0f2;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 6px solid var(--pink-light);
             margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
 
         h1 {
             font-family: 'Pacifico', cursive;
             color: var(--pink-primary);
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin: 0.5rem 0;
-            line-height: 1.2;
         }
 
         .name {
-            color: #777;
-            font-weight: 400;
-            letter-spacing: 1px;
-            margin-bottom: 2.5rem;
-            text-transform: uppercase;
-            font-size: 0.9rem;
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 3rem;
         }
 
         /* --- BUTTONS --- */
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 30px;
             width: 100%;
-            height: 50px;
+            height: 60px;
             position: relative;
         }
 
         .btn {
             width: 110px;
-            height: 45px;
+            height: 42px;
             border: none;
             border-radius: 25px;
             font-weight: 600;
-            cursor: pointer;
             font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
+            cursor: pointer;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
         }
 
         .btn-yes {
-            background: linear-gradient(135deg, var(--pink-primary), #ff8e9e);
+            background: linear-gradient(45deg, var(--pink-primary), #ff8e9e);
             color: white;
-            box-shadow: 0 6px 15px rgba(255, 107, 129, 0.4);
-            z-index: 5;
+            box-shadow: 0 8px 15px rgba(255, 107, 129, 0.3);
+            z-index: 10;
         }
 
         .btn-yes:hover {
             transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(255, 107, 129, 0.5);
+            background: var(--pink-hover);
         }
 
         .btn-no {
-            background-color: #f8f9fa;
-            color: #888;
-            border: 1px solid #eee;
-            position: relative;
-            z-index: 4;
-            transition: opacity 0.2s;
+            background-color: var(--pink-light);
+            color: var(--pink-primary);
+            position: absolute; /* Position initiale gérée par JS pour la flexibilité */
+            right: calc(50% - 130px); /* Aligné à droite du centre au début */
+            top: 10px;
+            z-index: 5;
+            transition: all 0.15s ease-out;
+            touch-action: none;
         }
 
-        /* --- SUCCESS VIEW --- */
+        /* --- SUCCESS --- */
         .hidden { display: none !important; }
 
         .success-content {
@@ -134,13 +124,12 @@
         }
 
         .heart {
-            font-size: 5rem;
-            display: inline-block;
+            font-size: 6rem;
             animation: pulse 0.8s infinite;
+            display: inline-block;
             margin-bottom: 1rem;
         }
 
-        /* --- ANIMATIONS --- */
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.15); }
@@ -148,14 +137,15 @@
         }
 
         @keyframes pop {
-            0% { transform: scale(0.3); opacity: 0; }
+            0% { transform: scale(0); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Responsive adjustments */
-        @media (max-width: 400px) {
-            .card { min-height: 400px; padding: 1.5rem; }
-            h1 { font-size: 1.7rem; }
+        /* Responsive Mobile */
+        @media (max-width: 480px) {
+            .card { padding: 2rem 1.5rem; min-height: 420px; }
+            h1 { font-size: 1.8rem; }
+            .profile-img { width: 120px; height: 120px; }
         }
     </style>
 </head>
@@ -163,13 +153,13 @@
 
     <div class="card" id="mainCard">
         <div id="initialView">
-            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=300&h=300&auto=format&fit=crop" alt="Photo" class="profile-img">
+            <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=400&h=400&auto=format&fit=crop" alt="Rindra" class="profile-img">
             
             <h1>Will you be my Valentine?</h1>
             <div class="name">Rindra Tiavina</div>
 
-            <div class="btn-container">
-                <button class="btn btn-yes" onclick="showSuccess()">Yes</button>
+            <div class="btn-container" id="area">
+                <button class="btn btn-yes" id="yesBtn" onclick="showSuccess()">Yes</button>
                 <button class="btn btn-no" id="noBtn">No</button>
             </div>
         </div>
@@ -177,44 +167,45 @@
         <div id="successView" class="hidden success-content">
             <div class="heart">💖</div>
             <h1>🎉 YOUHOU ! 🎉</h1>
-            <p style="color: #555;">Félicitations !<br>Tu as fait le meilleur choix possible. ✨</p>
+            <p>Mon cœur fait boum ! À très vite Valentine. ✨</p>
         </div>
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
         const card = document.getElementById('mainCard');
-        let hasMoved = false;
+        const yesBtn = document.getElementById('yesBtn');
 
-        const moveButton = () => {
-            // Passer en position absolue par rapport à la carte au premier mouvement
-            if (!hasMoved) {
-                noBtn.style.position = 'absolute';
-                hasMoved = true;
-            }
-
+        function moveButton() {
+            // Calculer les limites internes de la carte
+            // On laisse une marge (padding) pour que le bouton ne touche pas les bords
+            const padding = 20;
             const cardRect = card.getBoundingClientRect();
             const btnRect = noBtn.getBoundingClientRect();
 
-            // Marges de sécurité pour pas que le bouton touche les bords
-            const padding = 15;
+            // Calcul des coordonnées max relatives à la carte
+            const maxX = card.clientWidth - noBtn.offsetWidth - padding;
+            const maxY = card.clientHeight - noBtn.offsetHeight - padding;
+            const minX = padding;
+            const minY = padding;
+
+            // Générer une position aléatoire n'importe où dans la carte
+            let newX = Math.random() * (maxX - minX) + minX;
+            let newY = Math.random() * (maxY - minY) + minY;
+
+            // Appliquer la position
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
             
-            // Calculer l'espace disponible à l'intérieur de la carte
-            const availableWidth = cardRect.width - btnRect.width - (padding * 2);
-            const availableHeight = cardRect.height - btnRect.height - (padding * 2);
+            // On s'assure que le bouton "No" ne soit jamais au dessus du bouton "Yes" au repos
+            // mais ici la priorité est de rester dans la carte.
+        }
 
-            // Générer des coordonnées aléatoires
-            const randomX = Math.random() * availableWidth + padding;
-            const randomY = Math.random() * availableHeight + padding;
+        // Événement : s'approche avec la souris (PC)
+        noBtn.addEventListener('mouseenter', moveButton);
 
-            noBtn.style.left = `${randomX}px`;
-            noBtn.style.top = `${randomY}px`;
-        };
-
-        // Événements PC
-        noBtn.addEventListener('mouseover', moveButton);
-        
-        // Événements Mobile
+        // Événement : s'approche avec le doigt (Mobile)
         noBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
             moveButton();
@@ -223,9 +214,7 @@
         function showSuccess() {
             document.getElementById('initialView').classList.add('hidden');
             document.getElementById('successView').classList.remove('hidden');
-            
-            // Petit bonus : change le fond en rose fixe au succès
-            document.body.style.background = "#ffebef";
+            document.body.style.background = "#ffdfe5";
         }
     </script>
 </body>
