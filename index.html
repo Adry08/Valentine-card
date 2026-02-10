@@ -8,37 +8,34 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; margin:0; padding:0; }
 
 body {
-  margin: 0;
   min-height: 100vh;
-  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
 }
 
-/* ---------- CARD ---------- */
+/* --------- CARD --------- */
 .card {
   position: relative;
   width: 90vw;
   max-width: 360px;
-  aspect-ratio: 1 / 1; /* 🔒 CARD CARRÉE */
+  aspect-ratio: 1 / 1; /* carrée */
   background: #fff;
   border-radius: 24px;
-  padding: 24px 20px 80px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  padding: 24px 20px 80px; /* espace pour boutons bas */
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
 }
 
-/* ---------- CONTENT ---------- */
+/* --------- CONTENT --------- */
 .photo {
   width: 100px;
   height: 100px;
@@ -62,21 +59,20 @@ body {
   margin-bottom: auto;
 }
 
-/* ---------- BUTTON ZONE ---------- */
+/* --------- BUTTON ZONE --------- */
 .button-zone {
   position: absolute;
   bottom: 20px;
   width: 100%;
-  height: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 }
 
-/* ---------- BUTTONS ---------- */
+/* --------- BUTTONS --------- */
 .btn {
-  width: 100px;      /* 🔒 TAILLE FIXE */
+  width: 110px;      /* taille fixe */
   height: 42px;
   border-radius: 999px;
   border: none;
@@ -87,7 +83,7 @@ body {
 }
 
 .btn.yes {
-  background: linear-gradient(135deg, #ff5c8a, #ff9eb5);
+  background: linear-gradient(135deg,#ff5c8a,#ff9eb5);
   color: #fff;
   box-shadow: 0 6px 14px rgba(255,92,138,0.45);
   z-index: 2;
@@ -96,10 +92,10 @@ body {
 .btn.no {
   background: #ffe1ea;
   color: #e0004d;
-  position: absolute; /* 🔑 pour la fuite */
-  left: 50%;
-  transform: translateX(60px); /* AU DÉPART : même ligne que Yes */
+  position: absolute; /* fuite contrôlée */
   z-index: 3;
+  left: 50%;  /* centre horizontal départ */
+  transform: translateX(60px); /* légèrement à droite de Yes au départ */
 }
 </style>
 </head>
@@ -121,26 +117,31 @@ body {
 const noBtn = document.getElementById("noBtn");
 const card = document.getElementById("card");
 
+// Déplacements du bouton No (toujours dans la card)
 function moveNo() {
   const cardRect = card.getBoundingClientRect();
   const btnRect = noBtn.getBoundingClientRect();
-  const padding = 12;
+  const padding = 10;
 
   const maxX = cardRect.width - btnRect.width - padding;
   const maxY = cardRect.height - btnRect.height - padding;
 
+  // Tirage aléatoire mais restreint
   const x = Math.random() * maxX;
-  const y = Math.random() * (maxY - 60) + 20; // évite le bord bas
+  const y = Math.random() * (maxY - 100) + 20; // limite bas pour rester visible
 
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.style.left = `${x}px`;
+  noBtn.style.top = `${y}px`;
+  noBtn.style.transform = `translateX(0)`; // on utilise left/top pour éviter overflow
 }
 
+// Détection PC et mobile
 noBtn.addEventListener("pointerenter", moveNo);
-noBtn.addEventListener("touchstart", (e) => {
+noBtn.addEventListener("touchstart", e => {
   e.preventDefault();
   moveNo();
 });
-noBtn.addEventListener("click", (e) => e.preventDefault());
+noBtn.addEventListener("click", e => e.preventDefault());
 </script>
 
 </body>
